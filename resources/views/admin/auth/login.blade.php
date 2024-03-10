@@ -52,15 +52,15 @@
                         </div>
                     </div>
                     <div class="px-5 mt-5 d-flex justify-content-center h-custom-2">
-                        <form style="width: 23rem;" action="#" method="post">
+                        <form style="width: 23rem;" action="{{ route('login.auth') }}" method="post">
                             @csrf
                             <h3 class="pb-3 mb-3 text-black fw-normal" style="letter-spacing: 1px;">Log in</h3>
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
-                                        {{-- @foreach ($errors->all() as $error)
+                                        @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
-                                        @endforeach --}}
+                                        @endforeach
                                     </ul>
                                 </div>
                             @endif
@@ -77,8 +77,8 @@
                             <div class="pt-1 mb-4">
                                 <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
                             </div>
-                            <p>Tidak memiliki akun ? <a href="#" class="link-secondary">Daftar
-                                    disini</a></p>
+                            {{-- <p>Tidak memiliki akun ? <a href="#" class="link-secondary">Daftar
+                                    disini</a></p> --}}
                         </form>
 
                     </div>

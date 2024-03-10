@@ -18,8 +18,8 @@ class CreateAttendancesTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('teaching_role');
-            $table->bigInteger('class_id')->unsigned();
-            $table->foreign('class_id')->references('id')->on('grades');
+            $table->bigInteger('grade_id')->unsigned();
+            $table->foreign('grade_id')->references('id')->on('grades');
             $table->bigInteger('subject_id')->unsigned();
             $table->foreign('subject_id')->references('id')->on('subjects');
             $table->bigInteger('code_id')->unsigned();
