@@ -30,14 +30,14 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
                 <li class="nav-item {{ Route::is('admin.dashboard*') ? 'menu-open':'' }}">
-                    <a href="#" class="nav-link" style="color: #ffffff;">
+                    <a href="{{ route('admin.dashboard') }}" class="nav-link" style="color: #ffffff;">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dasbor
                         </p>
                     </a>
                 </li>
-                <li class="nav-item {{ Route::is('admin.special*', 'admin.book*', 'admin.loans*', 'admin.donate*') ? 'menu-open' : 'menu-close' }}">
+                <li class="nav-item {{ Route::is('admin.user*', 'admin.grade*', 'admin.subject*') ? 'menu-open' : 'menu-close' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-book" style="color: #ffffff;"></i>
                         <p style="color: #ffffff;">
@@ -47,8 +47,8 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" style="color: #ffffff;">
-                                <i class="far nav-icon {{ Route::is('admin.special*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
+                            <a href="{{ route('admin.user') }}" class="nav-link" style="color: #ffffff;">
+                                <i class="far nav-icon {{ Route::is('admin.user*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
                                 <p>
                                     Data Asisten
                                 </p>
@@ -56,8 +56,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link" style="color: #ffffff;">
-                                <i class="far nav-icon {{ Route::is('admin.book*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
+                            <a href="{{ route('admin.grade') }}" class="nav-link" style="color: #ffffff;">
+                                <i class="far nav-icon {{ Route::is('admin.grade*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
                                 <p>
                                     Data Kelas
                                 </p>
@@ -65,8 +65,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link" style="color: #ffffff;">
-                                <i class="far nav-icon {{ Route::is('admin.loans*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
+                            <a href="{{ route('admin.subject') }}" class="nav-link" style="color: #ffffff;">
+                                <i class="far nav-icon {{ Route::is('admin.subject*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
                                 <p>
                                     Data Materi
                                 </p>
@@ -75,7 +75,7 @@
                     </ul>
                 </li>
 
-                <li class="nav-item {{ Route::is('admin.special*', 'admin.book*', 'admin.loans*', 'admin.donate*') ? 'menu-open' : 'menu-close' }}">
+                <li class="nav-item {{ Route::is('admin.special*', 'admin.book*') ? 'menu-open' : 'menu-close' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-qrcode" style="color: #ffffff;"></i>
                         <p style="color: #ffffff;">
@@ -114,7 +114,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link" style="color: #ffffff;">
+                            <a href="{{ route('logout') }}" class="nav-link" style="color: #ffffff;">
                                 <i class="far nav-icon {{ Route::is('admin.text*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
                                 <p>
                                     Riwayat Absen
