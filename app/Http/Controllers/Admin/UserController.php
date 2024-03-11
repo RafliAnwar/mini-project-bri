@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         $users = User::all();
 
-        return view('admin.user.index', ['users', $users]);
+        return view('admin.user.index',['users' => $users]);
     }
 
     public function create(){
@@ -26,9 +26,9 @@ class UserController extends Controller
         $data = $request->except('_token');
         
         $request->validate([
+            'assistant_id' => 'required',
             'role'=> 'required',
             'name'=> 'required|string',
-            'phone' => 'required|max:15|regex:/^\+62\d{0,}$/',
             'email' => 'required|email',
             'password' => 'required',
         ]);
@@ -42,10 +42,10 @@ class UserController extends Controller
         }
         
         $data['password'] = Hash::make($request->password);
-        $data['join_date'] = Carbon::now()->format('Ym');
+        $data['join_date'] = Carbon::now()->format('Y-m-d');
 
         User::create($data);
-        return redirect()->route('admin.grade')->with('success', 'Materi berhasil dibuat');
+        return redirect()->route('admin.user')->with('success', 'Asisten abru berhasil ditambahkan');
     }
 
     public function edit(string $id)
@@ -59,15 +59,17 @@ class UserController extends Controller
     {
         $data = $request->except('_token');
         $request->validate([
+            'assistant_id' => 'required',
             'role'=> 'required',
             'name'=> 'required|string',
-            'phone' => 'required|max:15|regex:/^\+62\d{0,}$/',
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
         $user = User::find($id);
 
+        $data['password'] = Hash::make($request->password);
+        
         $user->update($data);
         return redirect()->route('admin.user')->with('success', 'Berhasil memperbarui data pengguna');
     }

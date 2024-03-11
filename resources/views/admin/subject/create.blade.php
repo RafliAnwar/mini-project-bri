@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
 
         {{-- Alert Here --}}
         @if ($errors->any())    
@@ -19,7 +19,7 @@
         
         <div class="card card-primary">
             <div class="card-header">
-                <h3 class="card-title">Buat Kategori</h3>
+                <h3 class="card-title">Buat Materi</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
@@ -28,7 +28,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="title">Nama Materi</label>
-                        <input type="text" class="form-control w-50" id="subject_name" name="subject_name"
+                        <input type="text" class="form-control" id="subject_name" name="subject_name"
                             placeholder="Dasar Visualisasi" value="{{ old('subject_name') }}">
                     </div>
                 </div>
