@@ -43,12 +43,19 @@
                     </div>
                     <div class="card-body">
                         <div class="text-center mt-3">
-                            <button class="btn btn-danger">Generate Kode Absen</button>
-                        </div> 
-                        {{-- kode kosong tambahin bang 
-                            kurang bikin kode generate sama form absen
-                            riwayat absen
-                            riwayat yang bikin kode--}}
+                            <form action="{{ route('admin.code.store') }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Generate Kode Absen</button>
+                            </form>
+                        </div>
+                        @if (session('code'))
+                            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                Kode Absen: {{ session('code') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                     </div>
 
                 </div>

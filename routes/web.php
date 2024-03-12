@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\AccessController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AccessController;
+use App\Http\Controllers\Admin\CodeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\GradeController;
 use App\Http\Controllers\Admin\LoginController;
@@ -66,6 +67,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['user.auth']], function () {
         });
     });
     //codes
+    Route::group(['prefix'=>'code'], function(){
+        Route::get('/', [CodeController::class, 'index'])->name('admin.code');
+        Route::post('/store', [CodeController::class, 'store'])->name('admin.code.store');
+        
+    });
 
     //attendances
 

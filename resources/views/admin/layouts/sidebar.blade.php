@@ -91,7 +91,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link" style="color: #ffffff;">
+                                <a href="{{ route('admin.code') }}" class="nav-link" style="color: #ffffff;">
                                     <i
                                         class="far nav-icon {{ Route::is('admin.special*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                     <p>
@@ -152,7 +152,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link" style="color: #ffffff;">
+                                <a href="{{ route('admin.code') }}" class="nav-link" style="color: #ffffff;">
                                     <i
                                         class="far nav-icon {{ Route::is('admin.special*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                     <p>
