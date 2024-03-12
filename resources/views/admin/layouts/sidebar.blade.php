@@ -21,7 +21,8 @@
                 <a href="#" class="d-block">{{ auth()->user()->name }}</a>
             </div> --}}
             <div class="info">
-                <a href="#" class="d-block" style="color: #ffffff;">Admin</a>
+                <a href="#" class="d-block"
+                    style="color: #ffffff;">{{ Str::limit(auth()->user()->name, 10, '...') }}</a>
             </div>
         </div>
 
@@ -29,7 +30,171 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
-                <li class="nav-item {{ Route::is('admin.dashboard*') ? 'menu-open':'' }}">
+                @if (Auth::check() && Auth::user()->role == 'admin')
+                    <li class="nav-item {{ Route::is('admin.dashboard*') ? 'menu-open' : '' }}">
+                        <a href="{{ route('admin.dashboard') }}" class="nav-link" style="color: #ffffff;">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dasbor
+                            </p>
+                        </a>
+                    </li>
+                    <li
+                        class="nav-item {{ Route::is('admin.user*', 'admin.grade*', 'admin.subject*') ? 'menu-open' : 'menu-close' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-book" style="color: #ffffff;"></i>
+                            <p style="color: #ffffff;">
+                                Data
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('admin.user') }}" class="nav-link" style="color: #ffffff;">
+                                    <i
+                                        class="far nav-icon {{ Route::is('admin.user*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                    <p>
+                                        Data Asisten
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('admin.grade') }}" class="nav-link" style="color: #ffffff;">
+                                    <i
+                                        class="far nav-icon {{ Route::is('admin.grade*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                    <p>
+                                        Data Kelas
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('admin.subject') }}" class="nav-link" style="color: #ffffff;">
+                                    <i
+                                        class="far nav-icon {{ Route::is('admin.subject*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                    <p>
+                                        Data Materi
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item {{ Route::is('admin.special*', 'admin.book*') ? 'menu-open' : 'menu-close' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-qrcode" style="color: #ffffff;"></i>
+                            <p style="color: #ffffff;">
+                                Generator
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" style="color: #ffffff;">
+                                    <i
+                                        class="far nav-icon {{ Route::is('admin.special*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                    <p>
+                                        Code Generator
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li
+                        class="nav-item {{ Route::is('admin.shift*', 'admin.text*', 'admin.librarian*', 'admin.facility*') ? 'menu-open' : 'menu-close' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-user-edit" style="color: #ffffff;"></i>
+                            <p style="color: #ffffff;">
+                                Report
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" style="color: #ffffff;">
+                                    <i
+                                        class="far nav-icon {{ Route::is('admin.shift*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                    <p>
+                                        Report
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('logout') }}" class="nav-link" style="color: #ffffff;">
+                                    <i
+                                        class="far nav-icon {{ Route::is('admin.text*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                    <p>
+                                        Riwayat Absen
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @elseif (Auth::check() && Auth::user()->role == 'pj')
+                    <li class="nav-item {{ Route::is('admin.dashboard*') ? 'menu-open' : '' }}">
+                        <a href="{{ route('admin.dashboard') }}" class="nav-link" style="color: #ffffff;">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dasbor
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item {{ Route::is('admin.special*', 'admin.book*') ? 'menu-open' : 'menu-close' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-qrcode" style="color: #ffffff;"></i>
+                            <p style="color: #ffffff;">
+                                Generator
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" style="color: #ffffff;">
+                                    <i
+                                        class="far nav-icon {{ Route::is('admin.special*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                    <p>
+                                        Code Generator
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li
+                        class="nav-item {{ Route::is('admin.shift*', 'admin.text*', 'admin.librarian*', 'admin.facility*') ? 'menu-open' : 'menu-close' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-user-edit" style="color: #ffffff;"></i>
+                            <p style="color: #ffffff;">
+                                Report
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" style="color: #ffffff;">
+                                    <i
+                                        class="far nav-icon {{ Route::is('admin.shift*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                    <p>
+                                        Report
+                                    </p>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="{{ route('logout') }}" class="nav-link" style="color: #ffffff;">
+                                    <i
+                                        class="far nav-icon {{ Route::is('admin.text*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
+                                    <p>
+                                        Riwayat Absen
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                @else
+                <li class="nav-item {{ Route::is('admin.dashboard*') ? 'menu-open' : '' }}">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link" style="color: #ffffff;">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
@@ -37,65 +202,8 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item {{ Route::is('admin.user*', 'admin.grade*', 'admin.subject*') ? 'menu-open' : 'menu-close' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-book" style="color: #ffffff;"></i>
-                        <p style="color: #ffffff;">
-                            Data
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('admin.user') }}" class="nav-link" style="color: #ffffff;">
-                                <i class="far nav-icon {{ Route::is('admin.user*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
-                                <p>
-                                    Data Asisten
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('admin.grade') }}" class="nav-link" style="color: #ffffff;">
-                                <i class="far nav-icon {{ Route::is('admin.grade*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
-                                <p>
-                                    Data Kelas
-                                </p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('admin.subject') }}" class="nav-link" style="color: #ffffff;">
-                                <i class="far nav-icon {{ Route::is('admin.subject*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
-                                <p>
-                                    Data Materi
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item {{ Route::is('admin.special*', 'admin.book*') ? 'menu-open' : 'menu-close' }}">
-                    <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-qrcode" style="color: #ffffff;"></i>
-                        <p style="color: #ffffff;">
-                            Generator
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" style="color: #ffffff;">
-                                <i class="far nav-icon {{ Route::is('admin.special*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
-                                <p>
-                                    Code Generator
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item {{ Route::is('admin.shift*', 'admin.text*', 'admin.librarian*', 'admin.facility*') ? 'menu-open' : 'menu-close' }}">
+                <li
+                    class="nav-item {{ Route::is('admin.shift*', 'admin.text*', 'admin.librarian*', 'admin.facility*') ? 'menu-open' : 'menu-close' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user-edit" style="color: #ffffff;"></i>
                         <p style="color: #ffffff;">
@@ -106,7 +214,8 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="#" class="nav-link" style="color: #ffffff;">
-                                <i class="far nav-icon {{ Route::is('admin.shift*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
+                                <i
+                                    class="far nav-icon {{ Route::is('admin.shift*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                 <p>
                                     Report
                                 </p>
@@ -115,7 +224,8 @@
 
                         <li class="nav-item">
                             <a href="{{ route('logout') }}" class="nav-link" style="color: #ffffff;">
-                                <i class="far nav-icon {{ Route::is('admin.text*') ? 'fa-dot-circle': 'fa-circle' }}"></i>
+                                <i
+                                    class="far nav-icon {{ Route::is('admin.text*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                 <p>
                                     Riwayat Absen
                                 </p>
@@ -123,15 +233,14 @@
                         </li>
                     </ul>
                 </li>
-
+                @endif
                 <li class="cursor-default disabled">
                     <a href="#" class="cursor-default nav-link disabled">
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link" style="color: #ffffff;"
-                        onclick="confirmLogout(event)">
+                    <a href="#" class="nav-link" style="color: #ffffff;" onclick="confirmLogout(event)">
                         <i class="nav-icon fas fa-sign-out-alt"></i>
                         <p>
                             Logout

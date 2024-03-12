@@ -3,106 +3,75 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    {{-- <h1>ini dashboard</h1> --}}
-    <div class="d-flex row justify-content-between"> {{-- row 1 --}}
-        <div class="p-0 small-box bg-primary col">
-            <div class="inner">
-                <h3>{{ 3 }}</h3>
-                <p>Tes</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-laptop-house"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-        <div class="p-0 mx-3 small-box bg-success col">
-            <div class="inner">
-                <h3>{{ 3 }}</h3>
-                <p>Tes</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-file"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-        <div class="p-0 small-box bg-danger col">
-            <div class="inner">
-                <h3>{{ 3 }}</h3>
-                <p>Tes</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-people-carry"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
+    <style type="text/css">
+        /* Google font */
+        @import url('https://fonts.googleapis.com/css?family=Orbitron');
 
-    <div class="d-flex row justify-content-between"> {{-- row 2 --}}
-        <div class="p-0 mx-3 small-box bg-warning col">
-            <div class="inner">
-                <h3>{{ 3 }}</h3>
-                <p>Tes</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-clock"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-        <div class="p-0 small-box bg-info col">
-            <div class="inner">
-                <h3>1</h3>
-                <p>Tes</p>
-            </div>
-            <div class="icon">
-                <i class="fas fa-universal-access"></i>
-            </div>
-            <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-            </a>
-        </div>
-    </div>
+        #digit_clock_time {
+            font-family: 'Work Sans', sans-serif;
+            color: #272827;
+            font-size: 35px;
+            text-align: center;
+            padding-top: 10px;
+        }
 
+        #digit_clock_date {
+            font-family: 'Work Sans', sans-serif;
+            color: #272827;
+            font-size: 20px;
+            text-align: center;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .digital_clock_wrapper {
+            background-color: #33333300;
+            padding: 25px;
+            max-width: 350px;
+            width: 100%;
+            text-align: center;
+            border-radius: 5px;
+            margin: 0 auto;
+        }
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header" style="background-color: #6998AB">
-                        <h3 class="card-title">Tabel 1</h3>
+                        <h3 class="card-title">Buat Kode Absen</h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="conditionChart"
-                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-danger">Generate Kode Absen</button>
+                        </div> 
+                        {{-- kode kosong tambahin bang 
+                            kurang bikin kode generate sama form absen
+                            riwayat absen
+                            riwayat yang bikin kode--}}
                     </div>
-                    
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header" style="background-color: #6998AB">
-                        <h3 class="card-title">Tabel 2</h3>
+                        <h3 class="card-title">Form Absen</h3>
                     </div>
                     <div class="card-body">
-                        <canvas id="freqChart"
-                            style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-                    </div>
-                    <div class="card-footer ">
-                        <div class="d-flex justify-content-between">
-                            <select name="period" id="pp" onchange="updateChart2(this)" class="selectpicker"  data-width="20%">
-                                {{-- @foreach ($specBookDrop as $item)
-                                    <option value="{{ $item->period }}" @if ($item->period == $period) selected @endif>
-                                        {{ $item->period }}</option>
-                                @endforeach --}}
-                            </select>
+                        <div class="text-center">
+                            <h3>Selamat datang, {{ Auth::user()->name }}</h3>
+                        </div>
+                        <div class="digital_clock_wrapper">
+                            <div id="digit_clock_time"></div>
+                            <div id="digit_clock_date"></div>
+                        </div>
+
+                        <div>
+
                         </div>
                     </div>
+
                 </div>
 
             </div>
@@ -111,115 +80,47 @@
 @endsection
 
 @section('js')
-    {{-- <script>
-        var conditionChartCanvas = $('#conditionChart').get(0).getContext('2d');
-        var pieData = {
-            labels: [
-                @foreach ($specBooks as $spec)
-                    '{{ $spec->desc }}', // Added single quotes and '->desc'
-                @endforeach
-            ],
-            datasets: [{
-                data: [
-                    @foreach ($specBooks as $spec)
-                        {{ $spec->count }}, // Added '->count'
-                    @endforeach
-                ],
-                backgroundColor: [
-                    '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de',
-                ],
-            }]
-        };
-        // Create pie or doughnut chart
-        // You can switch between pie and doughnut using the method below.
-        new Chart(conditionChartCanvas, {
-            type: 'pie',
-            data: pieData,
-            options: {
-                maintainAspectRatio: false,
-                responsive: true,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Jumlah Buku'
-                    },
-                    legend: {
-                        display: true,
-                        position: 'bottom'
-                    }
-                }
+    <script type="text/javascript">
+        function currentTime() {
+            var date = new Date(); /* creating object of Date class */
+            var hour = date.getHours();
+            var min = date.getMinutes();
+            var sec = date.getSeconds();
+            var midday = "AM";
+            midday = (hour >= 12) ? "PM" : "AM"; /* assigning AM/PM */
+            hour = (hour == 0) ? 12 : ((hour > 12) ? (hour - 12) : hour); /* assigning hour in 12-hour format */
+            hour = changeTime(hour);
+            min = changeTime(min);
+            sec = changeTime(sec);
+            document.getElementById("digit_clock_time").innerText = hour + " : " + min + " : " + sec + " " +
+                midday; /* adding time to the div */
+
+            var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+                'November', 'December'
+            ];
+            var days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+            var curWeekDay = days[date.getDay()]; // get day
+            var curDay = date.getDate(); // get date
+            var curMonth = months[date.getMonth()]; // get month
+            var curYear = date.getFullYear(); // get year
+            var date = curWeekDay + ", " + curDay + " " + curMonth + " " + curYear; // get full date
+            document.getElementById("digit_clock_date").innerHTML = date;
+
+            var t = setTimeout(currentTime, 1000); /* setting timer */
+        }
+
+        function changeTime(k) {
+            /* appending 0 before time elements if less than 10 */
+            if (k < 10) {
+                return "0" + k;
+            } else {
+                return k;
             }
-        });
+        }
+
+        currentTime();
     </script>
-
-    <script>
-        var ctx2 = document.getElementById('freqChart').getContext('2d');
-        var currentPeriod2 = "{{ $period }}";
-        var myChart2;
-
-        function fetchDataAndRenderChart2(period) {
-            fetch('admin/specChart/ajax/' + period)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not OK');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log('Received data:', data);
-
-                    var chartData2 = {
-                        labels: data.labels,
-                        datasets: [{
-                            data: data.datasets[0].data,
-                            backgroundColor: data.datasets[0].backgroundColor,
-                        }]
-                    };
-
-                    // Update the chart title
-                    myChart2.options.plugins.title.text = 'Periode: ' + period;
-
-                    // Update the chart data
-                    myChart2.data = chartData2;
-
-                    // Redraw the chart
-                    myChart2.update();
-                })
-                .catch(error => {
-                    console.error('Error fetching chart data:', error);
-                });
-        }
-
-        function renderChart2(chartData2) {
-            myChart2 = new Chart(ctx2, {
-                type: 'bar',
-                data: chartData2,
-                options: {
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Periode: ' + currentPeriod2
-                        },
-                        legend: {
-                            display: false,
-                            position: 'bottom'
-                        }
-                    }
-                }
-            });
-        }
-
-        // Initial chart rendering
-        renderChart2({}); // Create an empty chart initially
-
-        // Fetch and render chart data for the current period
-        fetchDataAndRenderChart2(currentPeriod2);
-
-        function updateChart2(option) {
-            var selectedPeriod = option.value;
-            fetchDataAndRenderChart2(selectedPeriod);
-        }
-    </script> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
     <!-- Latest compiled and minified JavaScript -->
