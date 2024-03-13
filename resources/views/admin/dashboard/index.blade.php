@@ -36,30 +36,31 @@
     </style>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-6">
-                <div class="card card-primary">
-                    <div class="card-header" style="background-color: #6998AB">
-                        <h3 class="card-title">Buat Kode Absen</h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="text-center mt-3 mb-3">
-                            <form action="{{ route('admin.code.store') }}" method="post">
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Generate Kode Absen</button>
-                            </form>
+            @if (Auth::user()->role === 'admin' && 'pj')
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header" style="background-color: #6998AB">
+                            <h3 class="card-title">Buat Kode Absen</h3>
                         </div>
-                        @if (session('code'))
-                            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
-                                Kode Absen: {{ session('code') }}
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
+                        <div class="card-body">
+                            <div class="text-center mt-3 mb-3">
+                                <form action="{{ route('admin.code.store') }}" method="post">
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Generate Kode Absen</button>
+                                </form>
                             </div>
-                        @endif
+                            @if (session('code'))
+                                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                    Kode Absen: {{ session('code') }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            @endif
+                        </div>
                     </div>
-
                 </div>
-            </div>
+            @endif
             <div class="col-md-6">
                 <div class="card card-primary">
                     <div class="card-header" style="background-color: #6998AB">
@@ -140,7 +141,7 @@
                                         </div>
                                 </form>
                             @endif
-                            
+
                             @if (!empty($check))
                                 <form id="form-update-absen" method="post"
                                     action = "{{ route('admin.attendance.update') }}" enctype="multipart/form-data">

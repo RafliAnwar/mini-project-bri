@@ -47,31 +47,27 @@
                                         <th>Waktu Mulai</th>
                                         <th>Waktu Akhir</th>
                                         <th>Durasi</th>
-                                        <th>PJ</th>  
+                                        <th>PJ</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    @foreach ($attendance as $attendance)
+                                    @foreach ($attendance as $record)
                                         <tr>
                                             <td></td>
-                                            {{-- <td>{{ $attendance->id }} </td> --}}
-                                            <td>{{ $attendance->user->assistant_id}} </td>
-                                            <td>{{ $attendance->user->name}} </td>
-                                            <td>{{ $attendance->grade->class_name}} </td>
-                                            <td>{{ $attendance->subject->subject_name}} </td>
-                                            <td>{{ $attendance->teaching_role}} </td>
-                                            <td>{{ $attendance->date }} </td>
-                                            <td>{{ $attendance->start }} </td>
-                                            <td>{{ $attendance->end }} </td>
-                                            <td>{{ $attendance->duration }} </td>
-                                            {{-- @php
-                                            use App\Models\Code;
-                                            use App\Models\User;
-                                                $getCode = Code::where('id', $attendance->code_id)->first();
-                                                $getPJ = User::where('id', $getCode->user_id)->first();
-                                            @endphp --}}
-                                            <td>{{ $getPJ->name}} </td>
+                                            <td>{{ $record->user->assistant_id }} </td>
+                                            <td>{{ $record->user->name }} </td>
+                                            <td>{{ $record->grade->class_name }} </td>
+                                            <td>{{ $record->subject->subject_name }} </td>
+                                            <td>{{ $record->teaching_role }} </td>
+                                            <td>{{ $record->date }} </td>
+                                            <td>{{ $record->start }} </td>
+                                            <td>{{ $record->end }} </td>
+                                            <td>{{ $record->duration }} </td>
+                                            @php
+                                                $getCode = App\Models\Code::where('id', $record->code_id)->first();
+                                                $getPJ = App\Models\User::where('id', $getCode->user_id)->first();
+                                            @endphp
+                                            <td>{{ $getPJ->name }} </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -87,28 +83,34 @@
 @section('js')
     <script>
         $(document).ready(function() {
-            // Initialize DataTable
-            var table = $('#attendance').DataTable();
-            table
-                .on('order.dt search.dt', function() {
-                    var i = 1;
+            var table = $('#attendance').DataTable({
+                dom: 'lBfrtipl',
+                buttons: [
+                    'excel',
+                    {
+                        extend: 'print',
+                        autoPrint: true,
+                        exportOptions: {
+                            columns: ':visible'
+                        }
+                    }
+                ]
+            });
 
-                    table
-                        .cells(null, 0, {
-                            search: 'applied',
-                            order: 'applied'
-                        })
-                        .every(function(cell) {
-                            this.data(i++);
-                        });
-                })
-                .draw();
-            // Apply event listener to all delete buttons
+            table.on('order.dt search.dt', function() {
+                var i = 1;
+                table.cells(null, 0, {
+                    search: 'applied',
+                    order: 'applied'
+                }).every(function(cell) {
+                    this.data(i++);
+                });
+            }).draw();
+
             $('#attendance').on('click', '.delete-btn', function(e) {
                 e.preventDefault();
                 var form = $(this).closest('form');
 
-                // Show SweetAlert confirmation dialog
                 Swal.fire({
                     title: 'Apakah anda yakin?',
                     text: 'Item yang telah dihapus tidak dapat dikembalikan!',
@@ -120,7 +122,6 @@
                     cancelButtonText: 'Kembali'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Submit the form after confirmation
                         form.submit();
                     }
                 });

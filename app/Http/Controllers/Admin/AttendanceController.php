@@ -15,49 +15,24 @@ class AttendanceController extends Controller
 {
     public function index()
     {
-        //excel all
-        $attendance = Attendance::with(['user', 'code', 'grade', 'subject'])
+        $attendance = Attendance::with(['user', 'grade', 'subject', 'code'])
             ->orderBy('created_at', 'DESC')
             ->get();
-
-        // Iterate over each attendance record to get the related code and PJ
-        $getCode = [];
-        $getPJ = [];
-        foreach ($attendance as $record) {
-            $code = Code::where('id', $record->code_id)->first();
-            $getCode[$record->id] = $code; // Store the code in an array with attendance record ID as key
-
-            // Assuming 'user_id' is the foreign key in the Code model that corresponds to the PJ's user ID
-            $pj = User::where('id', $code->user_id)->first();
-            $getPJ[$record->id] = $pj; // Store the PJ in an array with attendance record ID as key
-        }
-
-        return view('admin.attendance.history', compact('attendance', 'getCode', 'getPJ'));
+        return view('admin.attendance.index', compact('attendance')); 
     }
-
 
     public function selfIndex()
     {
-        //self
-        $attendance = Attendance::with(['user', 'code', 'grade', 'subject'])
-            ->where('user_id', Auth::id())
+        $userId = Auth::id();
+
+        $attendance = Attendance::with(['user', 'grade', 'subject', 'code']) 
+            ->whereHas('user', function ($query) use ($userId) {
+                $query->where('id', $userId);
+            })
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        $getCode = [];
-        $getPJ = [];
-
-        foreach ($attendance as $record) {
-            // Retrieve the code for each attendance record
-            $code = Code::where('id', $record->code_id)->first();
-            $getCode[$record->id] = $code; // Store the code in an array with attendance record ID as key
-
-            // Assuming 'user_id' is the foreign key in the Code model that corresponds to the PJ's user ID
-            $pj = User::where('id', $code->user_id)->first();
-            $getPJ[$record->id] = $pj; // Store the PJ in an array with attendance record ID as key
-        }
-
-        return view('admin.attendance.index', compact('attendance', 'getCode', 'getPJ'));
+        return view('admin.attendance.history', compact('attendance')); 
     }
 
     public function clockIn(Request $request)
