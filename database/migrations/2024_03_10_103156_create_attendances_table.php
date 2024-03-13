@@ -25,8 +25,8 @@ class CreateAttendancesTable extends Migration
             $table->bigInteger('code_id')->unsigned();
             $table->foreign('code_id')->references('id')->on('codes');
             $table->date('date');
-            $table->dateTime('start');
-            $table->dateTime('end');
+            $table->time('start');
+            $table->time('end');
             $table->integer('duration');
             $table->timestamps();
         });

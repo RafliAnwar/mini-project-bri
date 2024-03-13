@@ -42,7 +42,7 @@
                         <h3 class="card-title">Buat Kode Absen</h3>
                     </div>
                     <div class="card-body">
-                        <div class="text-center mt-3">
+                        <div class="text-center mt-3 mb-3">
                             <form action="{{ route('admin.code.store') }}" method="post">
                                 @csrf
                                 <button type="submit" class="btn btn-danger">Generate Kode Absen</button>
@@ -66,6 +66,22 @@
                         <h3 class="card-title">Form Absen</h3>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                                {{ session('success') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+                        @if (session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                {{ session('error') }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
                         <div class="text-center">
                             <h3>Selamat datang, {{ Auth::user()->name }}</h3>
                         </div>
@@ -73,16 +89,77 @@
                             <div id="digit_clock_time"></div>
                             <div id="digit_clock_date"></div>
                         </div>
-
+                        {{-- form check in --}}
                         <div>
-
+                            @if (empty($check))
+                                <form enctype="multipart/form-data" method="POST"
+                                    action="{{ route('admin.attendance.store') }}">
+                                    @csrf
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="title">ID Asisten</label>
+                                            <input type="text" class="form-control" id="assistant_id" name="assistant_id"
+                                                placeholder="Teknik Komputer" value="{{ $user->assistant_id }}" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title">Kelas</label>
+                                            <select name="grade_id" id="grade_id" class="form-control">
+                                                <option disabled selected>Silahkan dipilih</option>
+                                                @foreach ($grade as $grade)
+                                                    <option value="{{ $grade->id }}">{{ $grade->class_name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title">Materi</label>
+                                            <select name="subject_id" id="subject_id" class="form-control">
+                                                <option disabled selected>Silahkan dipilih</option>
+                                                @foreach ($subject as $subject)
+                                                    <option value="{{ $subject->id }}">{{ $subject->subject_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title">Peran Jaga</label>
+                                            <select class="form-control" name="teaching_role" id="teaching_role">
+                                                <option selected>Pilih peran jaga</option>
+                                                <option value="Ketua">Ketua</option>
+                                                <option value="Asisten">Asisten</option>
+                                                <option value="Moderator">Moderator</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="title">Kode Absen</label>
+                                            <input type="text" class="form-control" id="code" name="code"
+                                                placeholder="Ex:Ash2x46ft1" value="{{ old('code') }}">
+                                        </div>
+                                        <p><em>*Untuk mendapatkan kode absen dapat meminta ke Admin, Staff, dan PJ</em></p>
+                                        <div class="col text-center">
+                                            <button type="submit" class="btn btn-primary">Clock In</button>
+                                        </div>
+                                </form>
+                            @endif
+                            
+                            @if (!empty($check))
+                                <form id="form-update-absen" method="post"
+                                    action = "{{ route('admin.attendance.update') }}" enctype="multipart/form-data">
+                                    @method('PUT')
+                                    @csrf
+                                    <div class="col text-center">
+                                        <button type="submit" class="btn btn-warning">Clock Out</button>
+                                    </div>
+                                </form>
+                            @endif
                         </div>
+                        <!-- /.card-body -->
                     </div>
-
                 </div>
 
             </div>
+
         </div>
+    </div>
     </div>
 @endsection
 

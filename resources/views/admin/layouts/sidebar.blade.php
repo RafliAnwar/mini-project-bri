@@ -113,7 +113,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link" style="color: #ffffff;">
+                                <a href="{{ route('admin.attendance') }}" class="nav-link" style="color: #ffffff;">
                                     <i
                                         class="far nav-icon {{ Route::is('admin.shift*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                     <p>
@@ -123,7 +123,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('logout') }}" class="nav-link" style="color: #ffffff;">
+                                <a href="{{ route('admin.attendance.self') }}" class="nav-link" style="color: #ffffff;">
                                     <i
                                         class="far nav-icon {{ Route::is('admin.text*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                     <p>
@@ -173,7 +173,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="#" class="nav-link" style="color: #ffffff;">
+                                <a href="{{ route('admin.attendance') }}" class="nav-link" style="color: #ffffff;">
                                     <i
                                         class="far nav-icon {{ Route::is('admin.shift*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                     <p>
@@ -183,7 +183,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <a href="{{ route('logout') }}" class="nav-link" style="color: #ffffff;">
+                                <a href="{{ route('admin.attendance.self') }}" class="nav-link" style="color: #ffffff;">
                                     <i
                                         class="far nav-icon {{ Route::is('admin.text*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                     <p>
@@ -213,7 +213,7 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="#" class="nav-link" style="color: #ffffff;">
+                            <a href="{{ route('admin.attendance') }}" class="nav-link" style="color: #ffffff;">
                                 <i
                                     class="far nav-icon {{ Route::is('admin.shift*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                 <p>
@@ -223,7 +223,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="{{ route('logout') }}" class="nav-link" style="color: #ffffff;">
+                            <a href="{{ route('admin.attendance.self') }}" class="nav-link" style="color: #ffffff;">
                                 <i
                                     class="far nav-icon {{ Route::is('admin.text*') ? 'fa-dot-circle' : 'fa-circle' }}"></i>
                                 <p>

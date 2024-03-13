@@ -68,7 +68,7 @@
                                             {{-- <td>{{ $kode->id }} </td> --}}
                                             <td>{{ $kode->code }} </td>
                                             <td>{{ $kode->user->name }} </td>
-                                            <td>{{ $kode->get_code_id !== null ? 'Dipakai' : 'Belum Dipakai' }} </td>
+                                            <td>{{ $kode->get_user_id === null ? 'Belum Dipakai' : 'Dipakai' }} </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

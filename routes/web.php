@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AccessController;
+use App\Http\Controllers\Admin\AttendanceController;
 use App\Http\Controllers\Admin\CodeController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\GradeController;
@@ -68,12 +69,16 @@ Route::group(['prefix' => 'admin', 'middleware' => ['user.auth']], function () {
     });
     //codes
     Route::group(['prefix'=>'code'], function(){
-        Route::get('/', [CodeController::class, 'index'])->name('admin.code');
-        Route::post('/store', [CodeController::class, 'store'])->name('admin.code.store');
+        Route::get('/', [CodeController::class, 'index'])->middleware(['user.acc:admin,pj'])->name('admin.code');
+        Route::post('/store', [CodeController::class, 'store'])->middleware(['user.acc:admin,pj'])->name('admin.code.store');
         
     });
-
     //attendances
-
+    Route::group(['prefix'=>'attendance'], function(){
+        Route::get('/history', [AttendanceController::class, 'index'])->middleware(['user.acc:admin'])->name('admin.attendance');
+        Route::get('/self-history', [AttendanceController::class, 'selfIndex'])->name('admin.attendance.self');
+        Route::post('/store', [AttendanceController::class, 'clockIn'])->name('admin.attendance.store');
+        Route::put('/update', [AttendanceController::class, 'clockOut'])->name('admin.attendance.update');
+    });
 
 });
