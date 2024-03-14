@@ -36,7 +36,7 @@
     </style>
     <div class="container-fluid">
         <div class="row">
-            @if (Auth::user()->role === 'admin' && 'pj')
+            @if (Auth::user()->role === 'admin' || Auth::user()->role === 'pj')
                 <div class="col-md-6">
                     <div class="card card-primary">
                         <div class="card-header" style="background-color: #6998AB">
