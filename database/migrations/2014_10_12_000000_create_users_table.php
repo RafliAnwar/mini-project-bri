@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->enum('role', ['admin', 'pj', 'asisten']);
             $table->bigInteger('assistant_id')->nullable();
-            $table->string('photo');
+            $table->string('photo')->nullable();
             $table->date('join_date');
             $table->rememberToken();
             $table->timestamps();
